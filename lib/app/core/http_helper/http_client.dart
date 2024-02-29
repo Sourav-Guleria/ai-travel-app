@@ -85,7 +85,7 @@ class HttpClientManager {
         data: formData,
         options: Options(
           headers: {
-            'Authorization': '$token',
+            'Authorization': token,
             'Accept': '*/*',
             'Content-Type': 'multipart/form-data',
           },

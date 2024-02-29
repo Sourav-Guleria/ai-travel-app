@@ -10,6 +10,7 @@ import 'package:ai_travel_app/app/features/presentation/bloc/theme/theme_switche
 import 'package:ai_travel_app/app/features/presentation/pages/travel.dart';
 import 'package:ai_travel_app/app/features/presentation/widgets/calendar_widget.dart';
 import 'package:ai_travel_app/app/features/presentation/widgets/mutiple_chips.dart';
+import 'package:ai_travel_app/app/features/presentation/widgets/text_field_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,62 +109,35 @@ class _HomeState extends State<Home> with FormValidationMixin {
                               desktop: 16.sp, tablet: 17.sp, mobile: 18.sp),
                         ),
                       ),
-                      TextFormField(
-                        controller: _destinationTEC,
-
-                        decoration: InputDecoration(
-                          hintText: 'Enter Destination',
-                          hintStyle: CustomTextStyle.textStyle500(
-                            color: CustomColors.text,
-                            fontSize: widgetSize(
-                                desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-                          ),
-                        ),
-                        validator: validateEmpty, // Validating name
-                      ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 2.h,
+                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        child: TextFieldWidget(
+                          hintText: 'Enter Destination',
+                          textEditingController: _destinationTEC,
+                          validator: validateEmpty,
                         ),
-                        child: Text('Enter the dates for your travel',
-                            style: CustomTextStyle.textStyle500(
-                              color: CustomColors.blackColor,
-                              fontSize: widgetSize(
-                                  desktop: 14.sp, tablet: 15.sp, mobile: 16.sp),
-                            )),
                       ),
+                      Text('Select date range for your travel',
+                          style: CustomTextStyle.textStyle500(
+                            color: CustomColors.blackColor,
+                            fontSize: widgetSize(
+                                desktop: 16.sp, tablet: 17.sp, mobile: 18.sp),
+                          )),
                       Calender(
                         startDateTec: _startDateTEC,
                         endDateTec: _endDateTEC,
                       ),
-                      TextFormField(
-                        controller: _startDateTEC,
+                      TextFieldWidget(
+                        hintText: 'Start date',
                         readOnly: true,
-                        decoration: InputDecoration(
-                          hintText: 'Start date',
-                          hintStyle: CustomTextStyle.textStyle500(
-                            color: CustomColors.text,
-                            fontSize: widgetSize(
-                                desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-                          ),
-                        ),
-                        validator: validateEmpty, // Validating name
+                        textEditingController: _startDateTEC,
+                        validator: validateEmpty,
                       ),
-                      // Calender(
-                      //   tec: _endDateTEC,
-                      // ),
-                      TextFormField(
-                        controller: _endDateTEC,
+                      TextFieldWidget(
+                        hintText: 'End date',
                         readOnly: true,
-                        decoration: InputDecoration(
-                          hintText: 'End date',
-                          hintStyle: CustomTextStyle.textStyle500(
-                            color: CustomColors.text,
-                            fontSize: widgetSize(
-                                desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-                          ),
-                        ),
-                        validator: validateEmpty, // Validating name
+                        textEditingController: _endDateTEC,
+                        validator: validateEmpty,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -179,18 +153,10 @@ class _HomeState extends State<Home> with FormValidationMixin {
                                       mobile: 16.sp),
                                 )),
                       ),
-                      TextFormField(
-                        controller: _budgetTEC,
-
-                        decoration: InputDecoration(
-                          hintText: '500',
-                          hintStyle: CustomTextStyle.textStyle500(
-                            color: CustomColors.text,
-                            fontSize: widgetSize(
-                                desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-                          ),
-                        ),
-                        validator: validateEmpty, // Validating name
+                      TextFieldWidget(
+                        hintText: '5000',
+                        textEditingController: _budgetTEC,
+                        validator: validateEmpty,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -218,7 +184,7 @@ class _HomeState extends State<Home> with FormValidationMixin {
                         ),
                         child: customButton(
                           text: 'Genrate Travel Plan',
-                          buttonColor: CustomColors.appColor,
+                          buttonColor: CustomColors.text,
                           onTap: () {
                             TravelModel travelModel = TravelModel(
                                 destination: _destinationTEC.text,
@@ -228,13 +194,14 @@ class _HomeState extends State<Home> with FormValidationMixin {
                                 activities: intrestList
                                     .where((element) => element.value)
                                     .toList());
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Travel(
-                                          travelModel: travelModel,
-                                        )));
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Travel(
+                                            travelModel: travelModel,
+                                          )));
+                            }
                           },
                         ),
                       )

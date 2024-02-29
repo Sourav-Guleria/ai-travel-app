@@ -1,33 +1,58 @@
+import 'package:ai_travel_app/app/core/constants/custom_strings.dart';
 import 'package:ai_travel_app/app/core/responsive/responsive_sizer/responsive_sizer.dart';
 import 'package:ai_travel_app/app/features/data/models/travel_model.dart';
-import 'package:ai_travel_app/app/features/presentation/widgets/message_widget.dart';
 
 import 'package:ai_travel_app/app/features/presentation/widgets/travel_plan_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:url_launcher/link.dart';
 
 class Travel extends StatefulWidget {
-  Travel({super.key, required this.travelModel});
-  TravelModel travelModel;
+ const Travel({super.key, required this.travelModel});
+  final TravelModel travelModel;
   @override
   State<Travel> createState() => _TravelState();
 }
 
 class _TravelState extends State<Travel> {
   late final GenerativeModel _model;
-  late final ChatSession _chat;
+
   bool _loading = false;
 
-  String promt = '';
+  String prompt = '';
 
   var text = "";
-  String apiKey = "AIzaSyDrYADkxZkXRe6BU6SyRr7tifnxNu7pEQ4";
+  String apiKey = CustomStrings.apiKey;
+
+  Future<String> generateContentFromText(
+      {required String prompt, required GenerativeModel model}) async {
+    setState(() {
+      _loading = true;
+    });
+
+    try {
+      final response = await model.generateContent([Content.text(prompt)]);
+      text = response.text!;
+
+      if (text.isEmpty) {
+        text = "Somethin went wrong";
+        return text;
+      } else {
+        setState(() {
+          _loading = false;
+        });
+      }
+    } catch (e) {
+      text = e as String;
+      setState(() {
+        _loading = false;
+      });
+    }
+    return text;
+  }
 
   @override
   void initState() {
-    promt =
+    prompt =
         "Genrate a Travel Itenery for a trip to ${widget.travelModel.destination} from ${widget.travelModel.startDate} to ${widget.travelModel.endDate}. The travler has a budget of Rs ${widget.travelModel.budget} and is intrested in ${widget.travelModel.activities}. insure a itenery includes mix of popular tourist attractions, dining options, and unique local experinces please provide specific details for each day and including recomended activities, locations, anddinning suggestion.";
 
     super.initState();
@@ -35,8 +60,7 @@ class _TravelState extends State<Travel> {
       model: 'gemini-pro',
       apiKey: apiKey,
     );
-    _chat = _model.startChat();
-    _sendChatMessage(promt);
+    generateContentFromText(prompt: prompt, model: _model);
   }
 
   @override
@@ -89,32 +113,5 @@ class _TravelState extends State<Travel> {
           );
         },
         context: context);
-  }
-
-  Future<void> _sendChatMessage(String message) async {
-    setState(() {
-      _loading = true;
-    });
-
-    try {
-      var response = await _chat.sendMessage(
-        Content.text(message),
-      );
-      text = response.text!;
-
-      if (text == null) {
-        text = "Somethin went wrong";
-        return;
-      } else {
-        setState(() {
-          _loading = false;
-        });
-      }
-    } catch (e) {
-      text = e as String;
-      setState(() {
-        _loading = false;
-      });
-    }
   }
 }

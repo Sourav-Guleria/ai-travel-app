@@ -1,3 +1,4 @@
+import 'package:ai_travel_app/app/core/constants/custom_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -35,12 +36,22 @@ class _CalenderState extends State<Calender> {
       _focusedDay = focusDay;
       _rangeStart = rangeStart;
       _rangeEnd = rangeEnd;
-      var outputFormat = DateFormat('MM/dd/yyyy ');
-      var outputDate = outputFormat.format(rangeStart!);
+      var outputFormat = DateFormat(CustomStrings.dateFormat);
+      if (rangeStart != null) {
+        var outputRangeStartDate = outputFormat.format(rangeStart);
+        widget.startDateTec.text = outputRangeStartDate.toString();
+      }
+      if (rangeEnd != null) {
+        var outputRangeEndDate = outputFormat.format(rangeEnd);
 
-      widget.startDateTec.text = outputDate.toString();
-      widget.startDateTec.text = rangeStart.toString();
-      widget.endDateTec.text = rangeEnd.toString();
+        widget.endDateTec.text = outputRangeEndDate.toString();
+      }
+      // var outputFormat = DateFormat('MM/dd/yyyy ');
+      // var outputDate = outputFormat.format(rangeStart!);
+
+      // widget.startDateTec.text = outputDate.toString();
+      // widget.startDateTec.text = rangeStart.toString();
+      // widget.endDateTec.text = rangeEnd.toString();
     });
   }
 

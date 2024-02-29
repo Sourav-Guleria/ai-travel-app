@@ -4,8 +4,8 @@ import 'package:ai_travel_app/app/features/data/models/activities_model.dart';
 import 'package:flutter/material.dart';
 
 class MultipleChips extends StatefulWidget {
-  MultipleChips({super.key, required this.intrestList});
-  List<ActivityModel> intrestList;
+ const MultipleChips({super.key, required this.intrestList});
+  final List<ActivityModel> intrestList;
   @override
   State<MultipleChips> createState() => _MultipleChipsState();
 }

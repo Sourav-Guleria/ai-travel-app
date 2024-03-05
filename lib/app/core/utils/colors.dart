@@ -25,7 +25,7 @@ class CustomColors {
   static const Color redColor = Color.fromRGBO(243, 9, 9, 1);
   static const Color background = Color(0xFF1E2022);
   static const Color pureWhite = Color(0xFFFFFFFF);
-  static const Color text = Color.fromRGBO(57, 113, 146, 0.612);
+  static const Color text = Color.fromRGBO(2, 48, 67, 0.612);
   static const Color textGrey = Color(0xFF77838F);
   static const Color textLight = Color(0xFFF2F2F2);
   static const Color textDark = Color(0xFF1E2022);

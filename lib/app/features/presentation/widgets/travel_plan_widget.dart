@@ -13,30 +13,32 @@ class TravelPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Text(
+        //   "Destination:- ${travelModel.destination}",
+        //   style: CustomTextStyle.textStyle500(
+        //     color: CustomColors.blackColor,
+        //     fontSize: widgetSize(desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
+        //   ),
+        // ),
+        // Text(
+        //   'From ${travelModel.startDate} to ${travelModel.endDate}',
+        //   style: CustomTextStyle.textStyle500(
+        //     color: CustomColors.blackColor,
+        //     fontSize: widgetSize(desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
+        //   ),
+        // ),
+        // Text(
+        //   'Budget Rs:- ${travelModel.budget}',
+        //   style: CustomTextStyle.textStyle500(
+        //     color: CustomColors.blackColor,
+        //     fontSize: widgetSize(desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
+        //   ),
+        // ),
         Text(
-          travelModel.destination,
-          style: CustomTextStyle.textStyle500(
-            color: CustomColors.blackColor,
-            fontSize: widgetSize(desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-          ),
-        ),
-        Text(
-          '${travelModel.startDate} to ${travelModel.endDate}',
-          style: CustomTextStyle.textStyle500(
-            color: CustomColors.blackColor,
-            fontSize: widgetSize(desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-          ),
-        ),
-        Text(
-          'Rs ${travelModel.budget}',
-          style: CustomTextStyle.textStyle500(
-            color: CustomColors.blackColor,
-            fontSize: widgetSize(desktop: 20.sp, tablet: 21.sp, mobile: 22.sp),
-          ),
-        ),
-        Text(
-          text,
+          "Your Travel Itenery is \n $text",
           style: CustomTextStyle.textStyle500(
             color: CustomColors.blackColor,
             fontSize: widgetSize(desktop: 18.sp, tablet: 19.sp, mobile: 20.sp),

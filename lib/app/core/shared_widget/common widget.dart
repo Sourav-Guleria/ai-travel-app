@@ -87,7 +87,9 @@ Widget loaderWidget({EdgeInsets? padding}) {
   return Padding(
     padding: padding ?? EdgeInsets.symmetric(vertical: 40.h, horizontal: 40.w),
     child: const Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        color: CustomColors.text,
+      ),
     ),
   );
 }

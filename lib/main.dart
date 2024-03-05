@@ -1,13 +1,25 @@
+import 'package:ai_travel_app/app/features/data/models/travel_model.dart';
 import 'package:ai_travel_app/app/features/presentation/bloc/theme/theme_switcher_bloc.dart';
 import 'package:ai_travel_app/app/features/presentation/bloc/theme/theme_switcher_event.dart';
+import 'package:ai_travel_app/app/features/presentation/bloc/travel/travel_bloc.dart';
 import 'package:ai_travel_app/app/features/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(BlocProvider(
-      create: (context) => ThemeSwitcherBloc()..add(SetInitialTheme()),
-      child: const MyApp()));
+  TravelModel travelModel = TravelModel(
+      destination: "", startDate: "", endDate: "", budget: "", activities: []);
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => TravelBloc()..loadTravelData(travelModel),
+      ),
+      BlocProvider(
+        create: (context) => ThemeSwitcherBloc()..add(SetInitialTheme()),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,6 +37,9 @@ class MyApp extends StatelessWidget {
         //         colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.appColor),
 //         useMaterial3: true,
         home: const Home(),
+        // home: Travel(
+        //   travelModel: travelModel,
+        // ),
       );
     });
   }

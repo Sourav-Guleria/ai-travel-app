@@ -1,4 +1,5 @@
 import 'package:ai_travel_app/app/core/constants/custom_strings.dart';
+import 'package:ai_travel_app/app/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -64,11 +65,25 @@ class _CalenderState extends State<Calender> {
           var outputDate = outputFormat.format(selectedDay);
 
           widget.startDateTec.text = outputDate.toString();
-          _focusedDay = focusedDay; // update `_focusedDay` here as well
+          _focusedDay = focusedDay;
         });
       },
       rangeSelectionMode: RangeSelectionMode.toggledOn,
       onRangeSelected: onRangeSelected,
+      calendarStyle: const CalendarStyle(
+          rangeHighlightColor: CustomColors.text,
+          rangeStartDecoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: CustomColors.text,
+          ),
+          todayDecoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: CustomColors.text,
+          ),
+          rangeEndDecoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: CustomColors.text,
+          )),
       rangeStartDay: _rangeStart,
       rangeEndDay: _rangeEnd,
       focusedDay: _focusedDay,

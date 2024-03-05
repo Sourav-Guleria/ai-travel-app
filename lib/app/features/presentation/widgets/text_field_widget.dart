@@ -43,8 +43,7 @@ class TextFieldWidget extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        validator(value);
-        return null;
+        return validator(value);
       }, // Validating name
     );
   }

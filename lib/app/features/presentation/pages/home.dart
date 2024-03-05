@@ -14,7 +14,6 @@ import 'package:ai_travel_app/app/features/presentation/widgets/text_field_widge
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:table_calendar/table_calendar.dart';
 
 import '../../../core/mixins/validation_mixin.dart';
 
@@ -41,8 +40,15 @@ class _HomeState extends State<Home> with FormValidationMixin {
     ActivityModel(key: 'Nature', value: false)
   ];
 
-  // final _emailFocusNode = FocusNode();
-  // final _passwordFocusNode = FocusNode();
+  @override
+  void dispose() {
+    super.dispose();
+    _destinationTEC.dispose();
+    _startDateTEC.dispose();
+    _endDateTEC.dispose();
+    _budgetTEC.dispose();
+    intrestList.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +154,9 @@ class _HomeState extends State<Home> with FormValidationMixin {
                                 style: CustomTextStyle.textStyle500(
                                   color: CustomColors.blackColor,
                                   fontSize: widgetSize(
-                                      desktop: 14.sp,
-                                      tablet: 15.sp,
-                                      mobile: 16.sp),
+                                      desktop: 16.sp,
+                                      tablet: 17.sp,
+                                      mobile: 18.sp),
                                 )),
                       ),
                       TextFieldWidget(

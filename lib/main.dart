@@ -1,18 +1,24 @@
+import 'package:ai_travel_app/app/config/theme/index.dart';
+import 'package:ai_travel_app/app/core/boot_up/injection_container.dart';
+import 'package:ai_travel_app/app/core/responsive/responsive_sizer/responsive_sizer.dart';
 import 'package:ai_travel_app/app/features/data/models/travel_model.dart';
 import 'package:ai_travel_app/app/features/presentation/bloc/theme/theme_switcher_bloc.dart';
 import 'package:ai_travel_app/app/features/presentation/bloc/theme/theme_switcher_event.dart';
 import 'package:ai_travel_app/app/features/presentation/bloc/travel/travel_bloc.dart';
 import 'package:ai_travel_app/app/features/presentation/pages/home.dart';
+import 'package:ai_travel_app/app/features/presentation/pages/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  setUpLocator();
   TravelModel travelModel = TravelModel(
       destination: "", startDate: "", endDate: "", budget: "", activities: []);
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (context) => TravelBloc()..loadTravelData(travelModel),
+        create: (context) =>
+            TravelBloc(travelUsecase: serviceLocator())..onInit(travelModel),
       ),
       BlocProvider(
         create: (context) => ThemeSwitcherBloc()..add(SetInitialTheme()),
@@ -29,17 +35,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeSwitcherBloc, ThemeData>(builder: (context, state) {
-      return MaterialApp(
-        title: 'Flutter Demo',
-        theme: state,
-        debugShowCheckedModeBanner: false,
-
-        //         colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.appColor),
-//         useMaterial3: true,
-        home: const Home(),
-        // home: Travel(
-        //   travelModel: travelModel,
-        // ),
+      return ResponsiveSizer(
+        builder: (context, orientation, screenType) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: state,
+            darkTheme: AppTheme.darkTheme(),
+            debugShowCheckedModeBanner: false,
+            home: const Onboarding(),
+          );
+        },
+        context: context,
       );
     });
   }

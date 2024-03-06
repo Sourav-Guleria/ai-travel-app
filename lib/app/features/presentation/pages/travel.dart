@@ -1,3 +1,4 @@
+import 'package:ai_travel_app/app/core/boot_up/injection_container.dart';
 import 'package:ai_travel_app/app/core/enums/bloc_status_enum.dart';
 import 'package:ai_travel_app/app/core/responsive/responsive_sizer/responsive_sizer.dart';
 import 'package:ai_travel_app/app/core/shared_widget/common%20widget.dart';
@@ -21,13 +22,18 @@ class Travel extends StatefulWidget {
 
 class _TravelState extends State<Travel> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(
         builder: (context, orientation, screenType) {
           return Scaffold(
             body: BlocProvider(
-              create: (context) =>
-                  TravelBloc()..loadTravelData(widget.travelModel),
+              create: (context) => TravelBloc(travelUsecase: serviceLocator())
+                ..onInit(widget.travelModel),
               child: BlocBuilder<TravelBloc, TravelState>(
                 builder: (context, state) {
                   if (state.status.isLoading) {
@@ -78,7 +84,7 @@ class _TravelState extends State<Travel> {
                             child: SingleChildScrollView(
                               child: TravelPlan(
                                 travelModel: widget.travelModel,
-                                text: state.data,
+                                text: state.travelEntities!.result,
                               ),
                             ),
                           ),

@@ -20,7 +20,7 @@ class CustomColors {
   static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
   // static const Color buttonBlueColor = Color.fromRGBO(53, 53, 243, 1);
   static const Color buttonTextColor = Color.fromRGBO(255, 255, 255, 1);
-  static const Color appColor = Color.fromRGBO(210, 226, 235, 0.612);
+  static const Color appColor = Color.fromRGBO(2, 48, 67, 0.612);
   static const Color fieldBorderColor = Color.fromRGBO(184, 184, 184, 1);
   static const Color redColor = Color.fromRGBO(243, 9, 9, 1);
   static const Color background = Color(0xFF1E2022);

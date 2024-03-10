@@ -42,7 +42,9 @@ class MyApp extends StatelessWidget {
             theme: state,
             darkTheme: AppTheme.darkTheme(),
             debugShowCheckedModeBanner: false,
-            home: const Onboarding(),
+            home: Onboarding(
+              cubit: serviceLocator(),
+            ),
           );
         },
         context: context,
